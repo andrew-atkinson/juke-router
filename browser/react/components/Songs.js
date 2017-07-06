@@ -5,6 +5,8 @@ const Songs = (props) => {
   const songs = props.songs;
 
   return (
+    <div>
+      <h3>Songs</h3>
     <table className='table'>
       <thead>
         <tr>
@@ -33,6 +35,7 @@ const Songs = (props) => {
         }
       </tbody>
     </table>
+    </div>
   );
 }
 

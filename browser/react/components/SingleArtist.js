@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { HashRouter, Route, Link } from 'react-router-dom';
+import { HashRouter, Route, Link, NavLink } from 'react-router-dom';
 import Songs from './Songs';
-// import AllAlbums from './AllAlbums'
+import AllAlbums from './AllAlbums'
 
 
 export default class SingleArtist extends Component {
@@ -43,59 +43,64 @@ export default class SingleArtist extends Component {
   }
 
   render () {
-    const artist = this.state.singleArtist;
-
+    const artist = this.state.singleArtist; // or however you've named it
     const albums = this.state.artistAlbums;
-    // const selectAlbum = this.props.selectAlbum;
     const songs = this.state.artistSongs;
-   
-    return (
-        <div>
-            <h3>{ this.state.singleArtist.name }</h3>
+        return (
             <div>
-                <h3>Albums</h3>
-                <div className="row">
-                {
-                    albums.map(album => (
-                        <div className="col-xs-4" key={ album.id }>
-                        <Link to={`/albums/${album.id}`} className="thumbnail" href="#" onClick={() => selectAlbum(album.id)}>
-                            <img src={ album.imageUrl } />
-                            <div className="caption">
-                            <h5>
-                                <span>{ album.name }</span>
-                            </h5>
-                            <small>{ album.songs.length } songs</small>
-                            </div>
-                        </Link>
-                        </div>
-                    ))
-                }
-                </div>
-                <h3>Songs</h3>
-                <Songs songs={ songs }/>
-                {/*<h3>Songs</h3>
-                <table className='table'>
-                <tbody>
-                {
-                songs && songs.map(song => (
-                    <tr key={song.id}>
-                    <td>
-                        <button className="btn btn-default btn-xs">
-                        <span className="glyphicon glyphicon-play"></span>
-                        </button>
-                    </td>
-                    <td>{ song.name }</td>
-                    <td>
-                        <span>{ song.artists ? song.artists.map(artist => artist.name).join(', ') : null }</span>
-                    </td>
-                    <td>{ song.genre }</td>
-                    </tr>
-                ))
-                }
-            </tbody>
-            </table>*/}
+            <h3>{ artist.name }</h3>
+            <ul className="nav nav-tabs">
+                <li><NavLink to={`/artists/${artist.id}/albums`}>ALBUMS</NavLink></li>
+                <li><NavLink to={`/artists/${artist.id}/songs`} activeClassName=".active">SONGS</NavLink></li>
+            </ul>
+            <Route path={`/artists/${artist.id}/albums`} render={
+                (routeProps) => <AllAlbums 
+                albums={this.state.artistAlbums} 
+                 />
+            } />
+
+            <Route path={`/artists/${artist.id}/songs`} render={
+                (routeProps) => <Songs 
+                songs={this.state.artistSongs} 
+                />
+            } />
             </div>
-        </div>
-    );
-  }
+        );
+    }
 }
+    // const artist = this.state.singleArtist;
+
+    // const albums = this.state.artistAlbums;
+    // // const selectAlbum = this.props.selectAlbum;
+    // const songs = this.state.artistSongs;
+   
+    // return (
+    //     <div>
+    //         <h3>{ this.state.singleArtist.name }</h3>
+    //         <div>
+    //             <h3>Albums</h3>
+    //             <div className="row">
+    //             {
+    //                 albums.map(album => (
+    //                     <div className="col-xs-4" key={ album.id }>
+    //                     <Link to={`/albums/${album.id}`} className="thumbnail" href="#" onClick={() => selectAlbum(album.id)}>
+    //                         <img src={ album.imageUrl } />
+    //                         <div className="caption">
+    //                         <h5>
+    //                             <span>{ album.name }</span>
+    //                         </h5>
+    //                         <small>{ album.songs.length } songs</small>
+    //                         </div>
+    //                     </Link>
+    //                     </div>
+    //                 ))
+    //             }
+    //             </div>
+    //             <h3>Songs</h3>
+    //             <Songs songs={ songs }/>
+               
+//             </div>
+//         </div>
+//     );
+//   }
+

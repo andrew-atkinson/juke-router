@@ -18,12 +18,11 @@ export default class StatefulAlbums extends Component {
   }
 
   render () {
-    console.log(this.state)
     const albums = this.state.albums;
     const selectAlbum = this.props.selectAlbum;
 
     return (
-      <AllAlbums albums={ albums }/>
+      <AllAlbums albums={ albums } selectAlbum={ selectAlbum }/>
     );
   }
 }
